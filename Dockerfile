@@ -1,9 +1,7 @@
 FROM ubuntu:latest
 MAINTAINER brenoafb
 
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install git curl unzip build-essential
+RUN apt-get update && apt-get -y upgrade && apt-get -y install git curl unzip build-essential
 RUN curl https://accellera.org/images/downloads/standards/systemc/systemc-2.3.3.zip -o systemc-2.3.3.zip
 RUN unzip systemc-2.3.3.zip
 
@@ -19,6 +17,7 @@ RUN make
 RUN make install
 RUN echo 'export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/systemc-2.3.3/lib-linux64' >> ~/.bashrc
 RUN echo "export SYSTEMC=/systemc-2.3.3/" >> ~/.bashrc
+RUN ln -s /systemc-2.3.3 /usr/local/systemc-2.3.3
 
 
 WORKDIR /root
